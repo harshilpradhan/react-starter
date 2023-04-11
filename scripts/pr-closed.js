@@ -25,15 +25,13 @@ const main = async () => {
     pull_number,
   });
 
-  // Read PR title and description
-  const prTitle = pr.title;
-  const prDescription = pr.body;
+  const { title, body } = pr;
   const listOfCommits = commits.reduce(
     (text, item) => `${text} \n ${item.commit.message}`,
     ``
   );
 
-  const prompt = `Prepare release notes from following PR Info. \n\n PR Title: ${prTitle} \n\n PR Description: ${prDescription} \n\n Commits: \n ${listOfCommits}`;
+  const prompt = `Prepare release notes from following PR Info. \n\n PR Title: ${title} \n\n PR Description: ${body} \n\n Commits: \n ${listOfCommits}`;
 
   const result = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
