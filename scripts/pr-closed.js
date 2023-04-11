@@ -1,5 +1,5 @@
-import { Octokit } from "@octokit/rest";
-import { OpenAIApi, Configuration } from "openai";
+import { Octokit } from '@octokit/rest';
+import { OpenAIApi, Configuration } from 'openai';
 
 const openai = new OpenAIApi(
   new Configuration({
@@ -36,16 +36,16 @@ const main = async () => {
   const prompt = `Prepare release notes from following PR Info. \n\n PR Title: ${prTitle} \n\n PR Description: ${prDescription} \n\n Commits: \n ${listOfCommits}`;
 
   const result = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
+    model: 'gpt-3.5-turbo',
     messages: [
       {
-        role: "user",
+        role: 'user',
         content: prompt,
       },
     ],
   });
 
-  console.log(result);
+  console.log(result.data?.choices?.[0]?.message?.content);
 };
 
 main().catch((error) => {
